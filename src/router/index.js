@@ -2,27 +2,60 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Usuarios from '../views/Usuarios.vue';
+import Dinamico from '../views/Dinamico.vue';
+import Usuario2 from '../views/Usuario2.vue';
+import Usuario3 from '../views/Usuario3.vue';
+import Servicio from '../views/Servicio.vue';
+
 
 Vue.use(VueRouter)
+
+function sumando(ruta) {
+  return {
+    resultado: (parseInt(ruta.params.n1) + parseInt(ruta.params.n2))
+  }
+}
 
   const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: Home
+  },
+  {
+    path: '/servicio',
+    name: 'Servicio',
+    component: Servicio,
+    beforeEnter: (to, from, next) => {
+          if (confirm(`${from.path}. Se quiere ir de ${to.path}...!!!`)) {
+              next()
+          } else if (confirm(`Quieres ir a about`)) {
+            next('/about')
+          }else {
+              next(false)
+          }
+    }
   },
   {
     path: '/usuarios',
     name: 'Usuarios',
-    component: Usuarios
+    components: {
+      default: Usuarios,
+      a: Usuario2,
+      b: Usuario3
+    },
+    props: true
+  },
+  {
+    path: '/dinamico/:n1-:n2',
+    name: 'Dinamico',
+    component: Dinamico,
+    props: sumando
   },
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/About.vue')
   }
 ]
 
