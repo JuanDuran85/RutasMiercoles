@@ -1,6 +1,7 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/Home.vue';
+import Usuarios from '../views/Usuarios.vue';
 
 Vue.use(VueRouter)
 
@@ -8,7 +9,12 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+  },
+  {
+    path: '/usuarios',
+    name: 'Usuarios',
+    component: Usuarios
   },
   {
     path: '/about',
